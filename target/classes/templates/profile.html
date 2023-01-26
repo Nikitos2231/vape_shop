@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" th:href="@{css1/img/favicon.ico}" type="image/x-icon">
+    <link th:href="@{/css1/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css1/css/fontello.css}">
+    <link rel="stylesheet" th:href="@{/css1/css/style.css}">
+    <title>Title</title>
+</head>
+<body>
+<header>
+    <div class="container header__container mb-5">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-auto text-logo">
+                <a th:href="@{/main}" class="color-profile">
+                    DarkVaper
+                </a>
+            </div>
+            <div class="col-auto">
+                <a th:if="${isOwn == true}" th:href="@{/man/{man_id}(man_id=${man.getUserId()})}" class="color-profile">
+                    Профиль
+                </a>
+                <a th:if="${isOwn == false && isAnonymous == false}" th:href="@{/man/{man_id}(man_id=${enteredMan.getUserId()})}" class="color-profile">
+                    Профиль
+                </a>
+                <a th:if="${isOwn == false && isAnonymous == true}" th:href="@{/auth/login}" class="color-profile">
+                    Войти
+                </a>
+            </div>
+
+        </div>
+    </div>
+</header>
+<section class="section-profile mb-5">
+    <div class="container">
+        <div class="row justify-content-evenly">
+            <div class="col-lg-4 col-md-7 col-sm-8 col-10 mb-lg-0 mb-4">
+                <div class="row flex">
+                    <div class="col-12">
+                            <a th:if="${isOwn == true}" th:href="@{/man/{man_id}/add_avatar(man_id=${man.getUserId()})}">
+                                <img th:src="${man.getAvatar()}"
+                                     alt="" class="img-fluid img-profile mb-2">
+                            </a>
+                            <img th:if="${isOwn == false}" th:src="${man.getAvatar()}"
+                                alt="" class="img-fluid img-profile mb-2">
+
+
+                        <div style="color: red" th:text="${message}"></div>
+                        <div class="rating-result mb-0 profile__stars">
+                            <span th:if="${man.getUserCountStars() > 0}" th:class="active"></span>
+                            <span th:unless="${man.getUserCountStars() > 0}"></span>
+                            <span th:if="${man.getUserCountStars() > 1}" th:class="active"></span>
+                            <span th:unless="${man.getUserCountStars() > 1}"></span>
+                            <span th:if="${man.getUserCountStars() > 2}" th:class="active"></span>
+                            <span th:unless="${man.getUserCountStars() > 2}"></span>
+                            <span th:if="${man.getUserCountStars() > 3}" th:class="active"></span>
+                            <span th:unless="${man.getUserCountStars() > 3}"></span>
+                            <span th:if="${man.getUserCountStars() > 4}" th:class="active"></span>
+                            <span th:unless="${man.getUserCountStars() > 4}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div th:if="${isOwn == false}" class="col-lg-8 col-md-10 col-sm-11 col-12">
+                <div class="row justify-content-end mb-2 div__profile">
+                    <div class="col-lg-9 col-md-9 col-sm-10 col-11">
+                        <label class="color-white" for="Name1">Имя</label>
+                        <input disabled th:value="${man.getUserName()}" id="Name1" type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="row justify-content-end mb-2 div__profile">
+                    <div class="col-lg-9 col-md-9 col-sm-10 col-11">
+                        <label class="color-white" for="Surname1">Фамилия</label>
+                        <input disabled th:value="${man.getUserSurname()}" id="Surname1" type="text" class="form-control">
+                    </div>
+                </div>
+                <div th:if="${canEstimate == true && wasManEstimated == false}" class="row justify-content-end div__profile mb-2">
+                    <div class="col-auto">
+                        <a th:href="@{/man/{man_id}/estimate(man_id=${man.getUserId()})}" type="submit" class="btn btn-primary btn__estimating">Оставить отзыв</a>
+                    </div>
+                </div>
+            </div>
+
+
+            <form th:if="${isOwn == true}" th:action="@{/man/{man_id}/update(man_id=${man.getUserId()})}" th:method="PATCH" th:object="${man}" class="col-lg-8 col-md-10 col-sm-11 col-12">
+                <div class="row justify-content-end mb-2 div__profile">
+                    <div class="col-lg-9 col-md-9 col-sm-10 col-11">
+                        <label class="color-white" for="Name">Имя</label>
+                        <input th:field="*{userName}" id="Name" type="text" class="form-control">
+                        <div style="color: red" th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">
+                    </div>
+                    </div>
+                </div>
+                <div class="row justify-content-end mb-2 div__profile">
+                    <div class="col-lg-9 col-md-9 col-sm-10 col-11">
+                        <label class="color-white" for="Surname">Фамилия</label>
+                        <input th:field="*{userSurname}" id="Surname" type="text" class="form-control">
+                        <div style="color: red" th:if="${#fields.hasErrors('userSurname')}" th:errors="*{userSurname}">
+                    </div>
+                    </div>
+                </div>
+                <div class="row justify-content-end mb-2 div__profile">
+                    <div class="col-lg-9 col-md-9 col-sm-10 col-11">
+                        <label class="color-white" for="email">Email</label>
+                        <input th:value="${man.getUserEmail()}" id="email" type="email" class="form-control" disabled>
+                        <div th:if="${man.getActivationCode() != null}" style="color: orange">Пожалуйста, подтвердите свой адрес электронной почты</div>
+                        </div>
+                </div>
+                <div class="row justify-content-end mb-3 div__profile">
+                    <div class="col-lg-9 col-md-9 col-sm-10 col-11">
+                        <label class="color-white" for="date">Дата</label>
+                        <input required th:field="*{userDateOfBirth}" id="date" type="date" class="form-control">
+                        <div style="color: red" th:if="${#fields.hasErrors('userDateOfBirth')}" th:errors="*{userDateOfBirth}">
+                        </div>
+                        </div>
+                </div>
+                <div class="row justify-content-end mb-2 div__profile">
+                    <div class="col-lg-9 col-md-9 col-sm-10 col-11">
+                        <label class="color-white" for="telegramLink">Telegram Link</label>
+                        <input th:field="*{telegramLink}" id="telegramLink" type="text" class="form-control">
+<!--                        <div style="color: red" th:if="${#fields.hasErrors('userSurname')}" th:errors="*{userSurname}">-->
+<!--                        </div>-->
+                    </div>
+                </div>
+                <div class="row justify-content-end div__profile mb-2">
+                    <div class="col-auto">
+                        <input type="submit" class="btn btn-primary btn__search" value="Изменить">
+                    </div>
+                </div>
+            </form>
+            <div th:if="${isOwn == true}" class="col-lg-12 col-md-10 col-sm-11 col-12 mb-2">
+                <div class="row justify-content-end div__profile">
+                    <div class="col-auto">
+                        <form th:action="@{/logout}" th:method="post">
+                            <input type="submit" class="btn btn-primary btn__logout" value="Выйти из аккаунта">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${isAnonymous == false}" class="col-lg-12 col-md-10 col-sm-11 col-12">
+                <div th:if="${enteredMan.getUserRole() == 'ROLE_ADMIN' && isOwn == true}" class="row justify-content-end div__profile">
+                    <div class="col-auto">
+                        <a th:href="@{/admin/{man_id}(man_id=${man.getUserId()})}" class="btn btn-primary btn__search bg-info">Админ</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-auto">
+                <h2 th:if="${items.size() == 0 && itemsNoChecked.size() == 0}" class="mb-3 color-profile">
+                    Активные лоты (нет активных объявлений)
+                </h2>
+                <h2 th:unless="${items.isEmpty()}" class="mb-3 color-profile">
+                    Активные лоты
+                </h2>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div th:if="${itemsNoChecked != null && isOwn == true}" th:each="item : ${itemsNoChecked}" class="col-lg-3 mb-4 col-md-4 col-sm-6 card_absolute">
+                <div class="card card__div">
+                    <div style="filter: blur(7px)">
+                        <img th:src="${item.getItemAvatar()}"
+                            class="card-img-top img-card" alt="...">
+                        <div class="card-body">
+                            <h5 th:text="${item.getItemName()}" class="card-title h5__card"></h5>
+                            <p th:text="${item.getItemPrise() + 'руб'}" class="card-text card-prise"></p>
+                            <div class="btn btn-primary btn__search">Посмотреть</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${items != null}" th:each="item : ${items}" class="col-lg-3 mb-4 col-md-4 col-sm-6">
+                <div class="card card__div">
+                    <img th:src="${item.getItemAvatar()}"
+                         class="card-img-top img-card" alt="...">
+                    <div class="card-body">
+                        <h5 th:text="${item.getItemName()}" class="card-title h5__card"></h5>
+                        <p th:text="${item.getItemPrise() + 'руб'}" class="card-text card-prise"></p>
+                        <a th:href="@{/items/{item_id}(item_id=${item.getItemId()})}" class="btn btn-primary btn__search">Посмотреть</a>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${isOwn == true}" class="col-lg-3 mb-4 col-md-4 col-sm-6">
+                <div class="card card__div">
+                    <a th:href="@{/man/{man_id}/add_card(man_id=${man.getUserId()})}">
+                        <h3 class="color-profile">Добавить новый товар</h3>
+                        <img class="img-fluid" src="https://static.tildacdn.com/tild3431-3039-4438-a565-326163373261/e8e13c4d2ba6ba97e605.png" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<section th:if="${isOwn == true && boughtItems.size() != 0}">
+    <div class="container">
+        <div class="row">
+            <div class="col-auto">
+                <div>
+                    <h2 class="mb-3 color-profile">
+                        Купленные товары:
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div th:each="boughtItem : ${boughtItems}" class="col-lg-3 mb-4 col-md-4 col-sm-6">
+                <div class="card card__div">
+                    <div>
+                        <img th:src="${boughtItem.getItemAvatar()}"
+                             class="card-img-top img-card" alt="...">
+                        <div class="card-body">
+                            <h5 th:text="${boughtItem.getItemName()}" class="card-title h5__card"></h5>
+                            <p th:text="${boughtItem.getItemPrise() + 'руб'}" class="card-text card-prise"></p>
+                            <a th:href="@{/items/{item_id}(item_id=${boughtItem.getItemId()})}" class="btn btn-primary btn__search">Посмотреть</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section th:if="${isOwn == true && soldItems.size() != null}">
+    <div class="container">
+        <div class="row">
+            <div class="col-auto">
+                <div>
+                    <h2 th:if="${soldItems.size() != 0}" class="mb-3 color-profile">
+                        Проданные товары
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div th:each="soldItem : ${soldItems}" class="col-lg-3 mb-4 col-md-4 col-sm-6">
+                <div class="card card__div">
+                    <div>
+                        <img th:src="${soldItem.getItemAvatar()}"
+                             class="card-img-top img-card" alt="...">
+                        <div class="card-body">
+                            <h5 th:text="${soldItem.getItemName()}" class="card-title h5__card"></h5>
+                            <p th:text="${soldItem.getItemPrise() + 'руб'}" class="card-text card-prise"></p>
+                            <a th:href="@{/items/{item_id}(item_id=${soldItem.getItemId()})}" class="btn btn-primary btn__search">Посмотреть</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--th:if="${canEstimate == true && wasManEstimated == false}"  th:if="${isOwn == false}"-->
+
+<section th:if="${feedbackForMan != null}">
+    <div class="container">
+        <div class="row">
+            <h2 class="color-profile mb-3">
+                Отзывы:
+            </h2>
+        </div>
+        <div class="row flex-column">
+            <div class="col-lg-6 col-md-9 col-sm-12 col-12 bg-white comments p-md-3 p-lg-3 p-sm-2 p-2 mb-2">
+                <div th:if="${feedbackForMan != null}" th:each="feedback : ${feedbackForMan}" class="row mb-2">
+                    <div class="col-12 flex-row flex">
+                        <a th:href="@{/man/{man_id}(man_id=${feedback.getManFromFeedback().getUserId()})}" style="margin-right: 10px">
+                            <img th:src="${feedback.getManFromFeedback().getAvatar()}" alt="" class="img-fluid img-comments">
+                        </a>
+                        <div class="row">
+                            <div class="col-auto">
+                                <div class="flex">
+                                    <p th:text="${feedback.getManFromFeedback().getUserName() + ' ' + feedback.getManFromFeedback().getUserSurname()}" class="color-profile p-feedback">Иван Иванов</p>
+                                    <div class="rating-result rating-result-feedback">
+                                        <span th:if="${feedback.getFeedbackRating() > 0}" th:class="active"></span>
+                                        <span th:unless="${feedback.getFeedbackRating() > 0}"></span>
+                                        <span th:if="${feedback.getFeedbackRating() > 1}" th:class="active"></span>
+                                        <span th:unless="${feedback.getFeedbackRating() > 1}"></span>
+                                        <span th:if="${feedback.getFeedbackRating() > 2}" th:class="active"></span>
+                                        <span th:unless="${feedback.getFeedbackRating() > 2}"></span>
+                                        <span th:if="${feedback.getFeedbackRating() > 3}" th:class="active"></span>
+                                        <span th:unless="${feedback.getFeedbackRating() > 3}"></span>
+                                        <span th:if="${feedback.getFeedbackRating() > 4}" th:class="active"></span>
+                                        <span th:unless="${feedback.getFeedbackRating() > 4}"></span>
+                                    </div>
+                                </div>
+                                <p th:text="${feedback.getFeedbackText()}" class="m-0"></p>
+                                <p th:text="${feedback.getFeedbackDateOfCreate}" class="m-0 color__p">13.03 14:57:13</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+<!--                <div th:if="${comments.isEmpty()}" class="row mb-2 text-center">-->
+<!--                    <div class="col-12">-->
+<!--                        <p class="color-profile m-0">Пока нет комментариев</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<!--<section th:if="${isOwn == true}">-->
+<!--    <div class="container mb-4">-->
+<!--        <div class="row">-->
+<!--            <div class="col-auto">-->
+<!--                <h2 class="color-profile m-0 mb-3">-->
+<!--                    История-->
+<!--                </h2>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="row">-->
+<!--            <div class="col-auto">-->
+<!--                <div class="div__history">-->
+
+<!--                    <span class="m-0 color__p">13.03 14:57:13</span>-->
+<!--                    <span class="color-white">-->
+<!--                            Вы выложили товар:-->
+<!--                        </span>-->
+<!--                    <a href="#"> Charon baby</a>-->
+
+<!--                </div>-->
+<!--                <div class="div__history">-->
+
+<!--                    <span class="m-0 color__p">13.03 14:57:13</span>-->
+<!--                    <span class="color-white">-->
+<!--                            Вы продали товар:-->
+<!--                        </span>-->
+<!--                    <a href="#"> Charon baby</a>-->
+
+<!--                </div>-->
+<!--                <div class="div__history">-->
+<!--                    <span class="m-0 color__p">13.03 14:57:13</span>-->
+<!--                    <span class="color-white">-->
+<!--                            Вас оценил на 4 звезды пользователь:-->
+<!--                        </span>-->
+<!--                    <a href="#"> Поршенников Никита</a>-->
+<!--                </div>-->
+<!--                <div class="div__history">-->
+<!--                    <span class="m-0 color__p">13.03 14:57:13</span>-->
+<!--                    <span class="color-white">-->
+<!--                            Вы сняли с продажи товар:-->
+<!--                        </span>-->
+<!--                    <a href="#"> Charon baby</a>-->
+<!--                </div>-->
+<!--                <div class="div__history">-->
+<!--                    <span class="m-0 color__p">13.03 14:57:13</span>-->
+<!--                    <span class="color-white">-->
+<!--                            Вы сняли с продажи товар:-->
+<!--                        </span>-->
+<!--                    <a href="#"> Charon baby</a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</section>-->
+
+<script th:src="@{/css1/js/bootstrap.bundle.min.js}"></script>
+
+</body>
+</html>

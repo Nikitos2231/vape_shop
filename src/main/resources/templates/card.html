@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" th:href="@{css1/img/favicon.ico}" type="image/x-icon">
+    <link th:href="@{/css1/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css1/css/fontello.css}">
+    <link rel="stylesheet" th:href="@{/css1/css/style.css}">
+    <title>Title</title>
+</head>
+<body>
+<header>
+  <div class="container header__container mb-5">
+    <div class="row justify-content-between align-items-center">
+      <div class="col-auto text-logo">
+        <a th:href="@{/main}" class="color-profile">
+          DarkVaper
+        </a>
+      </div>
+      <div class="col-auto">
+        <a th:if="${isOwn == false && isAnonymous == true}" th:href="@{/auth/login}" class="color-profile">
+          Вход
+        </a>
+          <a th:if="${isOwn == false && isAnonymous == false}" th:href="@{/man/{man_id}(man_id=${enteredMan.getUserId()})}" class="color-profile">
+              Профиль
+          </a>
+        <a th:if="${isOwn == true}" th:href="@{/man/{man_id}(man_id=${man.getUserId()})}" class="color-profile">
+          Профиль
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section>
+    <div class="container mb-4">
+        <div class="row mb-3">
+            <div class="col-lg-8 col-md-6 col-sm-12 col-12">
+                <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
+                    <div class="carousel-indicators">
+                        <button th:if="${item.getItemAvatar2() != null}" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0"
+                                class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button th:if="${item.getItemAvatar2() != null}" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                                aria-label="Slide 2"></button>
+                        <button th:if="${item.getItemAvatar3() != null}" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                                aria-label="Slide 3"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div th:if="${item.getItemAvatar() != null}" class="carousel-item active">
+                            <img th:src="${item.getItemAvatar()}"
+                                 class="d-block img-fluid w-100 img-slider" alt="...">
+                        </div>
+                        <div th:if="${item.getItemAvatar2() != null}" class="carousel-item">
+                            <img th:src="${item.getItemAvatar2()}"
+                                 class="d-block img-fluid w-100 img-slider" alt="...">
+                        </div>
+                        <div th:if="${item.getItemAvatar3() != null}" class="carousel-item">
+                            <img th:src="${item.getItemAvatar3()}"
+                                 class="d-block img-fluid w-100 img-slider" alt="...">
+                        </div>
+                    </div>
+                    <button th:if="${item.getItemAvatar2() != null}" class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                            data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button th:if="${item.getItemAvatar2() != null}" class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                            data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+                <h1 th:text="${item.getItemName()}" class="color-white h1-view"></h1>
+                <p th:text="${item.getItemDescribe()}" class="color-white p-view"></p>
+                <p th:text="${'Цена: ' + item.getItemPrise()} + 'руб'" class="color-white card-prise"></p>
+            </div>
+        </div>
+        <section th:if="${isOwn == true || isAdmin == true}">
+            <div th:if="${isItemSold == false}" class="container">
+                <div class="row">
+                    <div th:if="${item.getItemChecked() == 'YES' && isOwn == true}" class="col-auto p-0">
+                        <a th:href="@{/items/{item_id}/update_item(item_id=${item.getItemId()})}" class="btn btn__search btn-primary m-0">Редактировать</a>
+                    </div>
+                    <div th:if="${item.getItemChecked() == 'YES' && isOwn == true}" class="col-auto m-0">
+                        <form th:action="@{/items/{item_id}/delete_item(item_id=${item.getItemId()})}" th:method="delete">
+                            <input type="submit" class="form-control bg-danger color-white m-0" value="Удалить">
+                        </form>
+                    </div>
+                    <div th:if="${isOwn == true && item.getItemChecked() == 'YES'}" class="col-auto p-0">
+                        <a th:href="@{/items/{item_id}/submit_sale_item(item_id=${item.getItemId()})}" class="btn btn-light m-0">Товар продан</a>
+                    </div>
+
+                    <div th:if="${isAdmin == true && item.getItemChecked() == 'NO'}" class="col-auto m-0">
+                        <form th:action="@{/items/{item_id}/activate_card(item_id=${item.getItemId()})}" th:method="post">
+                            <input type="submit" class="form-control bg-success color-white m-0" value="Подтвердить">
+                        </form>
+                    </div>
+                    <div th:if="${isAdmin == true && item.getItemChecked() == 'NO'}" class="col-auto m-0">
+                        <form th:action="@{/items/{item_id}/reject_card(item_id=${item.getItemId()})}" th:method="post">
+                            <input type="submit" class="form-control bg-danger color-white m-0" value="Отклонить">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section th:if="${isAnonymous == false && isItemSold == false}">
+            <div th:if="${isOwn == false && isBookedItem == false}" class="container">
+                <div class="row text-center">
+                    <div class="col-lg-8 col-md-6 col-sm-12 col-12 p-0">
+                        <form th:action="@{/items/{item_id}/submit_sale_item(item_id=${item.getItemId()})}" th:method="post">
+                            <input type="submit" class="btn btn-secondary mb-3 p-4 py-2" value="Забронировать">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${isOwn == false && isBookedItem == true}" class="container">
+                <div class="row text-center">
+                    <div class="col-lg-8 col-md-6 col-sm-12 col-12 p-0">
+                        <p class="color-profile">Вы забронировали этот товар, подождите пока владелец увидит вашу заявку</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <h2 class="color-profile mb-3">
+            Продавец
+        </h2>
+        <div class="row align-items-start mb-4">
+            <div class="col-lg-2 col-md-2 col-sm-2 col-3">
+                <a th:href="@{/man/{man_id}(man_id=${man.getUserId()})}">
+                    <img class="img-view img-fluid" th:src="${man.getAvatar()}"/>
+                </a>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-10 col-9">
+                <h3 th:text="${man.getUserName()} + ' ' + ${man.getUserSurname()}" class="color-profile"></h3>
+                <div class="rating-result mb-3">
+                    <span th:if="${man.getUserCountStars() > 0}" th:class="active"></span>
+                    <span th:unless="${man.getUserCountStars() > 0}"></span>
+                    <span th:if="${man.getUserCountStars() > 1}" th:class="active"></span>
+                    <span th:unless="${man.getUserCountStars() > 1}"></span>
+                    <span th:if="${man.getUserCountStars() > 2}" th:class="active"></span>
+                    <span th:unless="${man.getUserCountStars() > 2}"></span>
+                    <span th:if="${man.getUserCountStars() > 3}" th:class="active"></span>
+                    <span th:unless="${man.getUserCountStars() > 3}"></span>
+                    <span th:if="${man.getUserCountStars() > 4}" th:class="active"></span>
+                    <span th:unless="${man.getUserCountStars() > 4}"></span>
+                </div>
+                <a th:if="${man.getTelegramLink() != null}" th:href="${man.getTelegramLink()}"  target="_blank" rel="noopener noreferrer" class="btn btn__search">
+                    Задать вопрос
+                </a>
+            </div>
+        </div>
+    <h2 class="color-profile mb-3">
+        Комментарии
+    </h2>
+    <div class="row flex-column">
+        <div class="col-lg-6 col-md-9 col-sm-12 col-12 bg-white comments p-md-3 p-lg-3 p-sm-2 p-2 mb-2">
+            <div th:if="${!comments.isEmpty()}" th:each="comment : ${comments}" class="row mb-2">
+                <div class="col-12 flex-row flex">
+                    <a th:href="@{/man/{man_id}(man_id=${comment.getMan().getUserId()})}">
+                        <img th:src="${comment.getMan().getAvatar()}" alt="" class="img-fluid img-comments">
+                    </a>
+                    <div class="row">
+                        <div class="col-auto">
+                            <p th:text="${comment.getMan().getUserName() + ' ' + comment.getMan().getUserSurname()}" class="m-0 color-profile">Иван Иванов</p>
+                            <p th:text="${comment.getCommentText()}" class="m-0"></p>
+                            <p th:text="${comment.getCommentDateOfCreate()}" class="m-0 color__p">13.03 14:57:13</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${comments.isEmpty()}" class="row mb-2 text-center">
+                <div class="col-12">
+                    <p class="color-profile m-0">Пока нет комментариев</p>
+                </div>
+            </div>
+        </div>
+        <div th:if="${isAnonymous == false && isItemSold == false}" class="col-lg-4 col-md-4 col-sm-8 col-11">
+            <!--/*@thymesVar id="comment" type="com.example.vape_shop.models.Comment"*/-->
+            <form th:method="POST" th:action="@{/items/{item_id}/create_message(item_id=${item.getItemId()})}" th:object="${comment}" class="flex form-comments">
+                <input th:field="*{commentText}" type="text" class="form-control input-comments">
+                <input type="submit" class="btn btn-primary btn__search">
+            </form>
+            <div th:text="${message_error}" style="color: red"></div>
+        </div>
+    </div>
+    </div>
+</section>
+<script th:src="@{/css1/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

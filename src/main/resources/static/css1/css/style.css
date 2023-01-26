@@ -1,0 +1,353 @@
+@font-face {
+    font-family: 'Linkuinati';
+    src: local('Linkuinati'),
+    url("/static/css1/font/Inkulinati-Regular.otf");
+}
+
+body {
+    background-color: #161616;
+    background-image: url('https://catherineasquithgallery.com/uploads/posts/2021-02/1613302081_158-p-sinii-tuman-fon-234.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    font-family: 'Linkuinati', serif;
+}
+
+a {
+    text-decoration: none;
+}
+
+.h1 {
+    font-family: 'Linkuinati';
+    font-weight: 800;
+}
+
+.header__container {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-color: rgba(14, 13, 13, 0.9);
+}
+
+.color-header {
+    background-color: rgba(14, 13, 13, 0.9)
+}
+
+.text-logo {
+    font-family: 'Linkuinati';
+    font-weight: 800;
+    font-size: 52px;
+    font-style: italic;
+}
+
+@media(max-width: 500px) {
+    .text-logo {
+        font-size: 32px;
+    }
+}
+
+.btn__search {
+    background-color: #33CEC3;
+}
+
+.btn__search:hover {
+    background-color: rgb(85, 249, 255);
+}
+
+.btn__search:focus {
+    background-color: rgb(85, 249, 255);
+    box-shadow: rgb(85, 249, 255);
+    color: black;
+}
+
+.btn__logout:hover {
+    background-color: rgb(230, 51, 141);
+}
+
+.btn__logout {
+    background-color: #d52323;
+}
+
+.btn__logout:focus {
+    background-color: rgb(230, 51, 141);
+    box-shadow: rgb(230, 51, 141);
+    color: white;
+}
+
+.btn__admin {
+    background-color: dodgerblue;
+}
+
+.btn__admin:hover {
+    background-color: rgb(8, 107, 161);
+}
+
+.btn__admin:focus {
+    background-color: rgb(8, 107, 161);
+    box-shadow: rgb(8, 107, 161);
+    color: black;
+}
+
+.color-blue {
+    color: rgb(85, 249, 255);
+}
+
+.color-profile {
+    color: #33CEC3;
+}
+
+.img-slider {
+    max-height: 535px;
+}
+
+.div__card {
+    background-color: rgb(7, 115, 129);
+    border-radius: 20px;
+}
+
+.card__img {
+    border-radius: 10px;
+}
+
+.card__link {
+    text-align: center;
+}
+
+.card__link:hover {
+    border-bottom: 2px solid rgb(85, 249, 255);
+    color: rgb(85, 249, 255);
+}
+
+p.clip {
+    white-space: nowrap;
+    /* Запрещаем перенос строк */
+    overflow: hidden;
+    /* Обрезаем все, что не помещается в область */
+    padding: 5px;
+    /* Поля вокруг текста */
+    text-overflow: ellipsis;
+    /* Добавляем многоточие */
+}
+
+.card__div {
+    height: 100%;
+}
+
+.card__div:hover {
+    box-shadow: 0 0 5px 2px rgb(85, 249, 255);
+}
+
+.div_log {
+    display: flex;
+    justify-content: center;
+}
+
+.row__log {
+    border-radius: 20px;
+}
+
+.carousel-inner {
+    border-radius: 15px;
+}
+
+.img-view {
+    border-radius: 50%;
+    height: 130px;
+}
+
+.rating-result {
+    width: 210px;
+    margin: 0;
+}
+.rating-result span {
+    padding: 0;
+    font-size: 32px;
+    margin: 0 3px;
+    line-height: 1;
+    color: lightgrey;
+    text-shadow: 1px 1px white;
+}
+.rating-result > span:before {
+    content: '★';
+}
+.rating-result > span.active {
+    color: #33CEC3;
+    text-shadow: 1px 1px #33CEC3;
+}
+
+.color-white {
+    color: white;
+}
+
+.comments {
+    margin: 0 12px;
+    border-radius: 5px;
+}
+
+.img-comments {
+    height: 30px;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+.flex {
+    display: flex;
+}
+
+.input-comment {
+    margin-right: 5px;
+}
+
+@media(max-width: 992px) {
+    .img-view {
+        height: 90px;
+    }
+}
+
+@media(max-width: 768px) {
+    .img-view {
+        height: 70px;
+    }
+}
+
+.color__p {
+    color: grey;
+    font-size: 13px;
+}
+
+.h5__card {
+    white-space: nowrap; /* Запрещаем перенос строк */
+    overflow: hidden; /* Обрезаем все, что не помещается в область */
+    text-overflow: ellipsis; /* Добавляем многоточие */
+}
+
+.img-profile {
+    border-radius: 50%;
+    height: auto;
+}
+
+@media(max-width: 991px) {
+    .div__profile {
+        justify-content: center !important;
+    }
+}
+
+.profile__stars {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.section-profile {
+    margin-bottom: 100px;
+}
+
+@media(max-width: 1400px) {
+    .section-profile {
+        margin-bottom: 40px;
+    }
+}
+
+.img-card {
+    height: 350px;
+    object-fit: cover;
+}
+
+@media(max-width: 575px) {
+    .img-card {
+        height: 400px !important;
+    }
+}
+
+@media(max-width: 400px) {
+    .img-card {
+        height: 250px !important;
+    }
+}
+
+@media(max-width: 1200px) {
+    .img-card {
+        height: 250px;
+    }
+}
+
+.card-prise {
+    font-size: 18px;
+    font-style: italic;
+    font-weight: 700;
+}
+
+.card_absolute:before {
+    position: absolute;
+    content: 'Обработка';
+    color: rgb(230, 51, 141);
+    z-index: 2;
+    margin: auto;
+    top: 50%;
+    left: 0;
+    right: 0;
+    font-size: 24px;
+    font-weight: 700;
+
+}
+
+.card_absolute {
+    position: relative;
+}
+
+.btn__estimating {
+    background-color: rgb(255, 204, 26);
+}
+
+.input-comments {
+    margin-right: 20px;
+}
+
+.rating-area {
+    overflow: hidden;
+    width: 210px;
+    margin: 0;
+}
+.rating-area:not(:checked) > input {
+    display: none;
+}
+.rating-area:not(:checked) > label {
+    float: right;
+    width: 37px;
+    padding: 0;
+    cursor: pointer;
+    font-size: 32px;
+    line-height: 32px;
+    color: lightgrey;
+    text-shadow: 1px 1px #bbb;
+}
+.rating-area:not(:checked) > label:before {
+    content: '★';
+}
+.rating-area > input:checked ~ label {
+    color: #33CEC3;
+    text-shadow: 1px 1px #33CEC3;
+}
+.rating-area:not(:checked) > label:hover,
+.rating-area:not(:checked) > label:hover ~ label {
+    color: #33CEC3;
+}
+.rating-area > input:checked + label:hover,
+.rating-area > input:checked + label:hover ~ label,
+.rating-area > input:checked ~ label:hover,
+.rating-area > input:checked ~ label:hover ~ label,
+.rating-area > label:hover ~ input:checked ~ label {
+    color: #33CEC3;
+    text-shadow: 1px 1px #33CEC3;
+}
+.rate-area > label:active {
+    position: relative;
+}
+
+.rating-result-feedback span {
+    font-size: 20px;
+}
+
+.p-feedback {
+    margin: 0 5px 0 0;
+}

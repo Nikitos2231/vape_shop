@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" th:href="@{css1/img/favicon.ico}" type="image/x-icon">
+    <link th:href="@{/css1/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css1/css/fontello.css}">
+    <link rel="stylesheet" th:href="@{/css1/css/style.css}">
+    <title>Estimate</title>
+</head>
+<body>
+<header>
+    <div class="container header__container mb-4">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-auto text-logo">
+                <a href="#" class="color-profile">
+                    DarkVaper
+                </a>
+            </div>
+            <div class="col-auto">
+                <a th:href="@{/man/{man_id}(man_id=${enteredMan.getUserId()})}" class="color-profile">
+                    Профиль
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<section>
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-10 col-sm-8 col-md-6 col-lg-5 color-header row__log">
+                <h1 class="color-profile h1 mb-4 mt-5">Оценить пользователя</h1>
+                <form th:action="@{/man/{man_id}/estimate(man_id=${man.getUserId()})}" th:method="post" th:object="${feedback}">
+                    <div class="mb-3 row justify-content-center align-items-center">
+                        <div class="col-auto">
+                            <h2 class=" color-profile">Ваша оценка: </h2>
+                        </div>
+                        <div class="rating-area col-auto">
+                            <input checked="checked" type="radio" id="star-5" name="rating" th:value="5">
+                            <label for="star-5" title="Оценка «5»"></label>
+                            <input type="radio" id="star-4" name="rating" th:value="4">
+                            <label for="star-4" title="Оценка «4»"></label>
+                            <input type="radio" id="star-3" name="rating" th:value="3">
+                            <label for="star-3" title="Оценка «3»"></label>
+                            <input type="radio" id="star-2" name="rating" th:value="2">
+                            <label for="star-2" title="Оценка «2»"></label>
+                            <input type="radio" id="star-1" name="rating" th:value="1">
+                            <label for="star-1" title="Оценка «1»"></label>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <h2 class="mb-3 color-profile">Ваш комментарий: </h2>
+                        </div>
+                        <div class="col-8">
+                            <div class="input-group mb-4">
+                                    <textarea th:field="*{feedbackText}" type="text" class="form-control" placeholder="Текст комментария"
+                                              aria-label="Текст комментария" aria-describedby="basic-addon1"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-7">
+                            <input type="submit" class="btn btn-primary btn__search mb-4" value="Отправить"></input>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+</section>
+
+
+<script th:src="@{/css1/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

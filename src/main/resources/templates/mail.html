@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mail</title>
+</head>
+<body>
+
+<div style="display: flex; flex-direction: column; height: 350px; background-image: url('https://www.funnyart.club/uploads/posts/2022-05/1653972423_13-www-funnyart-club-p-kartinki-s-veipom-krasivo-15.jpg'); background-repeat: no-repeat; background-position: center; background-size: cover">
+    <div style="font-size: 24px; color: #0dcaf0">
+        Здравствуйте, <span th:text="${emailTo}"></span> для завершения регистрации вам нужно перейти по ссылке ниже:
+    </div>
+    <a th:href="${link}" style="font-size: 30px; color: #0dcaf0; text-align: center">Ссылка!</a>
+</div>
+</body>
+
+</html>
