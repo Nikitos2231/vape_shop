@@ -16,14 +16,6 @@ HELP.md
 *.iml
 *.ipr
 
-src/main/resources/static/css1/ImagesForItems/*.jpeg
-src/main/resources/static/css1/ImagesForItems/*.jpg
-src/main/resources/static/css1/ImagesForPeople/*.jpg
-src/main/resources/static/css1/ImagesForPeople/*.jpeg
-target/classes/static/css1/ImagesForItems/*.jpeg
-target/classes/static/css1/ImagesForItems/*.jpg
-target/classes/static/css1/ImagesForPeople/*.jpg
-target/classes/static/css1/ImagesForPeople/*.jpeg
 info.log
 fatal.log
 error.log
